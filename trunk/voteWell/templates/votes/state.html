@@ -1,0 +1,9 @@
+{% if legs %}
+    <ul>
+    {% for leg in legs %}
+        <li><a href="/legislator/{{ leg.name }}/">{{ leg.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No legislators from that state are available.</p>
+{% endif %}
