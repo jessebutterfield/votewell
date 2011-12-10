@@ -1,5 +1,21 @@
 from django.db import models
 
+class Bill(models.Model):
+    session = models.IntegerField()
+    kind = models.CharField(max_length=10)
+    number = models.IntegerField()
+    mainTitle = models.CharField(max_length=100)
+    updated = models.DateTimeField()
+    state_datetime = models.DateTimeField()
+    state = models.CharField(max_length=20)
+    introduced = models.DateField()
+    sponsor = models.ForeignKey('Legislator')
+    cosponsors = models.ManyToManyField('Legislator',related_name='cosponsored')
+    summary = models.TextField()
+    relatedbills = models.ManyToManyField('self',through='Relationship',symmetrical=False)
+    subjects = models.ManyToManyField('Subject')
+    
+
 class Legislator(models.Model):
     lastname = models.CharField(max_length=20)
     firstname = models.CharField(max_length=20)
@@ -23,3 +39,30 @@ class Legislator(models.Model):
     url = models.CharField(max_length=20)
     def __unicode__(self):
         return self.name
+
+class Title(models.Model):
+    bill = models.ForeignKey(Bill)
+    kind = models.CharField(max_length=15)
+    how = models.CharField(max_length=15)
+    title = models.CharField(max_length=100)
+    
+class Subject(models.Model):
+    name = models.CharField(max_length=50)
+    
+class Committee(models.Model):
+    code = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
+    bills = models.ManyToManyField(Bill,through='Activity')
+    
+class Relationship(models.Model):
+    srcBill = models.ForeignKey(Bill)
+    destBill = models.ForeignKey(Bill,related_name='reverseRelated')
+    kind = models.CharField(max_length=15)
+    
+class Activity(models.Model):
+    committee = models.ForeignKey(Committee)
+    bill = models.ForeignKey(Bill)
+    activity = models.CharField(max_length=30)
+    
+
+    
