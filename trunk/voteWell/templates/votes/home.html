@@ -1,0 +1,10 @@
+<h1> Welcome {{user.username}}</h1>
+<h2>Recent Comments</h2>
+{% if comments %}
+<ul>
+{% for c in comments %}
+<li>c.text</li>
+{%endfor%}
+{%endif%}
+
+<h2>Recent Comments by Friends</h2>

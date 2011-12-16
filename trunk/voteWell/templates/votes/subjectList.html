@@ -1,0 +1,6 @@
+<h1>Subjects</h1>
+    <ul>
+    {% for sub in subject_list %}
+        <li><a href="/subjects/{{ sub.id }}/">{{ sub.name }}</a></li>
+    {% endfor %}
+    </ul>
