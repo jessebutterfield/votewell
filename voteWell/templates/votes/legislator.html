@@ -7,7 +7,7 @@
 <h2>Sponsored Bills</h2>
 	<ul>
 	{% for bill in bills %}
-		<li><a href=/bill/bill.id>{{bill.mainTitle}}</a></li>
+		<li><a href=/bills/{{bill.id}}>{{bill.mainTitle}}</a></li>
 	{% endfor %}
 	</ul>
 {% endif %}

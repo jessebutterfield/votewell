@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 a.save()
             for term in subjects:
                 name = term.attributes['name'].value
-                s,discard = Subject.objects.get_or_create(name=term)
+                s,discard = Subject.objects.get_or_create(name=name)
                 b.subjects.add(s)
             for cosponsor in cosponsors:
                 b.cosponsors.add(Legislator.objects.get(pk=cosponsor.attributes['id'].value))

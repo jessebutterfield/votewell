@@ -1,0 +1,6 @@
+<h1>{{subject.name}}</h1>
+    <ul>
+    {% for bill in subject.bill_set.all %}
+        <li><a href="/bills/{{ bill.id }}/">{{ bill.mainTitle }}</a></li>
+    {% endfor %}
+    </ul>
