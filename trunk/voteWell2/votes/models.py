@@ -32,7 +32,7 @@ class Legislator(models.Model):
     metavidid = models.CharField(max_length=20)
     youtubeid = models.CharField(max_length=20)
     icpsrid = models.IntegerField(null=True,blank=True)
-    facebookgraphid = models.IntegerField(null=True,blank=True)
+    facebookgraphid = models.BigIntegerField(null=True,blank=True)
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=30)
     state = models.CharField(max_length=2)
