@@ -13,7 +13,7 @@ def home(request):
         c = Context({'user': request.user,
                      'comments': comments})
     else:
-        t = loader.get_template('welcome.html')
+        t = loader.get_template('votes/welcome.html')
         c = Context({})
     return HttpResponse(t.render(c))
 
