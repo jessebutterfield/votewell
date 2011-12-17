@@ -5,7 +5,7 @@ class Bill(models.Model):
     session = models.IntegerField()
     kind = models.CharField(max_length=10)
     number = models.IntegerField()
-    mainTitle = models.CharField(max_length=100)
+    mainTitle = models.TextField()
     updated = models.DateTimeField()
     state_datetime = models.DateTimeField()
     state = models.CharField(max_length=20)
@@ -25,7 +25,7 @@ class Legislator(models.Model):
     middlename = models.CharField(max_length=20)
     birthday = models.DateField(null=True,blank=True)
     gender = models.CharField(max_length=1)
-    religion = models.CharField(max_length=20)
+    religion = models.CharField(max_length=30)
     pvsid = models.IntegerField(null=True,blank=True)
     osid = models.CharField(max_length=20)
     bioguideid = models.CharField(max_length=20)
@@ -37,8 +37,8 @@ class Legislator(models.Model):
     title = models.CharField(max_length=30)
     state = models.CharField(max_length=2)
     district = models.IntegerField(null=True,blank=True)
-    party = models.CharField(max_length=10)
-    position = models.CharField(max_length=10)
+    party = models.CharField(max_length=20)
+    position = models.CharField(max_length=20)
     url = models.CharField(max_length=50)
     def __unicode__(self):
         return self.name
@@ -83,7 +83,7 @@ class Title(models.Model):
     bill = models.ForeignKey(Bill)
     kind = models.CharField(max_length=15)
     how = models.CharField(max_length=15)
-    title = models.CharField(max_length=100)
+    title = models.TextField()
     def __unicode__(self):
         return self.title
     
