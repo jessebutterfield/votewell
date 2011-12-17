@@ -39,7 +39,7 @@ class Legislator(models.Model):
     district = models.IntegerField(null=True,blank=True)
     party = models.CharField(max_length=10)
     position = models.CharField(max_length=10)
-    url = models.CharField(max_length=20)
+    url = models.CharField(max_length=50)
     def __unicode__(self):
         return self.name
     
