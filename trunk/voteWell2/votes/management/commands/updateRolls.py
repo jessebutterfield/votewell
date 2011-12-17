@@ -6,6 +6,7 @@ Created on Dec 10, 2011
 
 from os import listdir
 from xml.dom.minidom import parse
+from django.conf import settings
 from votes.models import *
 from django.core.management.base import BaseCommand, CommandError
 
@@ -14,7 +15,7 @@ class Command(BaseCommand):
     helb = 'Updates the legislator info'
 
     def handle(self, *args, **options):            
-        folderName = '/Users/jessebutterfield/workspace/voteWell/voteWell/data/rolls/'
+        folderName = settings.DATA_DIR + 'rolls/'
         files = listdir(folderName)
         nonPassage = {}
         for fileName in files:

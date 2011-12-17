@@ -5,6 +5,7 @@ Created on Dec 4, 2011
 '''
 
 from xml.dom.minidom import parse
+from django.conf import settings
 from votes.models import Legislator
 from django.core.management.base import BaseCommand, CommandError
 
@@ -13,7 +14,7 @@ class Command(BaseCommand):
     help = 'Updates the legislator info'
 
     def handle(self, *args, **options):            
-        fileName = '/Users/jessebutterfield/workspace/voteWell/voteWell/data/people.xml'
+        fileName = settings.DATA_DIR+'people.xml'
         xml = parse(fileName)
         people = xml.getElementsByTagName('person')
         for person in people:
