@@ -20,26 +20,26 @@ class Bill(models.Model):
     
 
 class Legislator(models.Model):
-    lastname = models.CharField(max_length=20)
-    firstname = models.CharField(max_length=20)
-    middlename = models.CharField(max_length=20)
+    lastname = models.TextField()
+    firstname = models.TextField()
+    middlename = models.TextField()
     birthday = models.DateField(null=True,blank=True)
     gender = models.CharField(max_length=1)
-    religion = models.CharField(max_length=30)
+    religion = models.TextField()
     pvsid = models.IntegerField(null=True,blank=True)
-    osid = models.CharField(max_length=20)
-    bioguideid = models.CharField(max_length=20)
-    metavidid = models.CharField(max_length=20)
-    youtubeid = models.CharField(max_length=20)
+    osid = models.TextField()
+    bioguideid = models.TextField()
+    metavidid = models.TextField()
+    youtubeid = models.TextField()
     icpsrid = models.IntegerField(null=True,blank=True)
     facebookgraphid = models.BigIntegerField(null=True,blank=True)
-    name = models.CharField(max_length=100)
+    name = models.TextField()
     title = models.CharField(max_length=30)
     state = models.CharField(max_length=2)
     district = models.IntegerField(null=True,blank=True)
     party = models.CharField(max_length=20)
     position = models.CharField(max_length=20)
-    url = models.CharField(max_length=50)
+    url = models.TextField()
     def __unicode__(self):
         return self.name
     
