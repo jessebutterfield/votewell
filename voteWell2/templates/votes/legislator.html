@@ -1,0 +1,13 @@
+<h1> {{leg.name}} </h1>
+{% if leg.birthdate%}<h3> Born: {{leg.birthdate}} {% endif %}
+{% if leg.facebookgraphid %}
+<a href=http://www.facebook.com/{{leg.facebookgraphid}}> Facebook</a> {% endif %}
+{% if leg.url %}<a href={{leg.url}}> Website</a> {% endif %}
+{% if bills %}
+<h2>Sponsored Bills</h2>
+	<ul>
+	{% for bill in bills %}
+		<li><a href=/bills/{{bill.id}}>{{bill.mainTitle}}</a></li>
+	{% endfor %}
+	</ul>
+{% endif %}
