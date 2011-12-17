@@ -1,0 +1,70 @@
+<h2> {{bill.kind|upper}} {{bill.number}} - {{bill.mainTitle}} </h2>
+<p> Session {{bill.session}} Introduced: {{bill.introduced}} </p>
+<p>Sponsor: <a href="/legislators/{{bill.sponsor.id}}">{{bill.sponsor.name}}</a></p>
+{% if bill.cosponsors %}
+	<p>Cosponsors ({{bill.cosponsors.count}}): <a href="/fail"> View</a></p>
+{% endif %}
+<h3> Summary </h3>
+{% if bill.summary and not bill.summary.isspace %}
+<p> {{bill.summary}} </p>
+{% else %}
+	<p> No summary available.
+{% endif %}
+<h2> Comments</h2>
+<table>
+<tr><td> Aye ({{commentMatrix.0|length}}) </td>
+<td> Nay ({{commentMatrix.1|length}}) </td>
+<td> Undecided ({{commentMatrix.2|length}})</td>
+</tr>
+<tr>
+{% for commentList in commentMatrix %}
+	<td valign="top">
+	{% if commentList|length > 0 %}
+	<ul>
+	{% for com in commentList %}
+		<li><p><a href="/Users/{{com.user_id}}">{{com.user.username}}</a> {{com.text}}</li></p>
+	{% endfor %}
+	</ul>
+	{% endif %}	
+	</td>
+{% endfor %}
+</tr>
+</table>
+
+<form action="/bills/{{ bill.id }}/comment/" method="post">
+{% csrf_token %}
+<textarea rows="6" cols="60" name="commentText">
+</textarea><br/>
+<input type="radio" name="comment" id="choice1" value="+" />
+ <label for="choice1">Aye</label>
+ <input type="radio" name="comment" id="choice2" value="-" />
+ <label for="choice2">Nay</label>
+  <input type="radio" name="comment" id="choice3" value="?" />
+ <label for="choice3">Undecided</label>
+<input type="submit" value="Comment" />
+</form>
+
+
+{% if bill.roll_set.count > 0 %}
+<h2> Vote </h2>
+<table>
+<tr><td> Aye ({{roll.aye}}) </td>
+<td> Nay ({{roll.nay}}) </td>
+<td> Present ({{roll.present}})</td>
+<td> Not Voting ({{roll.novote}})</td>
+</tr>
+<tr>
+{% for voteList in voteMatrix %}
+	<td valign="top">
+	{% if voteList|length > 0 %}
+	<ul>
+	{% for vote in voteList %}
+		<li><a href="/Legislators/{{vote.voter.id}}">{{vote.voter.name|slice:"4:"}}</a></li>
+	{% endfor %}
+	</ul>
+	{% endif %}	
+	</td>
+{% endfor %}
+</tr>
+</table>
+{% endif %}
