@@ -88,13 +88,13 @@ class Title(models.Model):
         return self.title
     
 class Subject(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.TextField()
     def __unicode__(self):
         return self.name
     
 class Committee(models.Model):
     code = models.CharField(max_length=10)
-    name = models.CharField(max_length=50)
+    name = models.TextField()
     bills = models.ManyToManyField(Bill,through='Activity')
     def __unicode__(self):
         return self.name
@@ -102,12 +102,12 @@ class Committee(models.Model):
 class Relationship(models.Model):
     srcBill = models.ForeignKey(Bill)
     destBill = models.ForeignKey(Bill,related_name='reverseRelated')
-    kind = models.CharField(max_length=15)
+    kind = models.TextField()
     
 class Activity(models.Model):
     committee = models.ForeignKey(Committee)
     bill = models.ForeignKey(Bill)
-    activity = models.CharField(max_length=30)
+    activity = models.TextField()
     
 class Comment(models.Model):
     user = models.ForeignKey(User)
