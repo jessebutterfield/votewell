@@ -27,6 +27,7 @@ class Command(BaseCommand):
             #get or create bill, for some reason get or create wasn't working
             try:
                 b = Bill.objects.get(session=session,kind=kind,number=number)
+                continue
             except Bill.DoesNotExist:
                 b = Bill(session=session,kind=kind,number=number)
             up = bill.attributes['updated'].value.replace('T',' ')
@@ -42,7 +43,7 @@ class Command(BaseCommand):
                 sd = sd[:-6]
             print sd
             b.state_datetime = sd
-            b.state = state.firstChild.nodeValue
+            b.state = state.firstChild.nodeValue[:20]
             introduced = bill.getElementsByTagName('introduced')[0]
             b.introduced = introduced.attributes['datetime'].value
             sponsor = bill.getElementsByTagName('sponsor')[0]
