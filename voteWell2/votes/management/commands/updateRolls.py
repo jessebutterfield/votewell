@@ -51,8 +51,14 @@ class Command(BaseCommand):
             b = Bill.objects.get(session=session,kind=kind,number=number)
             r.bill = b
             r.source = roll.attributes['source'].value
-            r.when = roll.attributes['datetime'].value
-            r.updated = roll.attributes['updated'].value
+            when = roll.attributes['datetime'].value.replace('T',' ')
+            if(len(when)>20):
+                when = when[:-6]
+            r.when = when
+            up = roll.attributes['updated'].value.replace('T',' ')
+            if(len(up)>20):
+                up = up[:-6]
+            r.updated = up
             r.aye = roll.attributes['aye'].value
             r.nay = roll.attributes['nay'].value
             r.novote = roll.attributes['nv'].value

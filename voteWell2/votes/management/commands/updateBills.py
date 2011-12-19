@@ -29,10 +29,19 @@ class Command(BaseCommand):
                 b = Bill.objects.get(session=session,kind=kind,number=number)
             except Bill.DoesNotExist:
                 b = Bill(session=session,kind=kind,number=number)
-            b.updated = bill.attributes['updated'].value
+            up = bill.attributes['updated'].value.replace('T',' ')
+            print len(up)
+            if(len(up)>20):
+                up = up[:-6]
+            b.updated = up
             
             state = bill.getElementsByTagName('state')[0]
-            b.state_datetime = state.attributes['datetime'].value
+            sd = state.attributes['datetime'].value.replace('T',' ')
+            print(len(sd))
+            if(len(sd)>20):
+                sd = sd[:-6]
+            print sd
+            b.state_datetime = sd
             b.state = state.firstChild.nodeValue
             introduced = bill.getElementsByTagName('introduced')[0]
             b.introduced = introduced.attributes['datetime'].value
@@ -49,6 +58,7 @@ class Command(BaseCommand):
             subjects = bill.getElementsByTagName('term')
             summary = bill.getElementsByTagName('summary')[0]
             b.summary = summary.firstChild.nodeValue
+            print b.updated
 
             b.save()
             for tit in titles:
