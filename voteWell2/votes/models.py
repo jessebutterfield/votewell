@@ -44,9 +44,9 @@ class Legislator(models.Model):
         return self.name
     
 class Roll(models.Model):
-    category = models.CharField(max_length=20)
-    kind = models.CharField(max_length=20)
-    question = models.CharField(max_length=50)
+    category = models.CharField(max_length=30)
+    kind = models.CharField(max_length=30)
+    question = models.TextField()
     bill = models.ForeignKey(Bill,null=True,blank=True)
     where = models.CharField(max_length=20)
     session = models.IntegerField()
