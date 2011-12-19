@@ -61,7 +61,7 @@ class Roll(models.Model):
     present = models.IntegerField()
     keys = models.ManyToManyField('VoteKey')
     required = models.CharField(max_length=5)
-    result = models.CharField(max_length=10)
+    result = models.CharField(max_length=30)
     votes = models.ManyToManyField(Legislator,through='Vote')
     def __unicode__(self):
         return self.question
