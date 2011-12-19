@@ -62,8 +62,8 @@ class Command(BaseCommand):
 
             b.save()
             for tit in titles:
-                kind = tit.attributes['type'].value
-                how = tit.attributes['as'].value
+                kind = tit.attributes['type'].value[:15]
+                how = tit.attributes['as'].value[:15]
                 title = tit.firstChild.nodeValue
                 Title.objects.get_or_create(kind=kind,title=title,
                                             how=how,bill=b)
