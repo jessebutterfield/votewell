@@ -1,3 +1,6 @@
+{% extends "votes/base.html" %}
+{% block content %}
+
 <h1> Welcome {{user.username}}</h1>
 <h2>Recent Comments</h2>
 {% if comments %}
@@ -8,3 +11,5 @@
 {%endif%}
 
 <h2>Recent Comments by Friends</h2>
+
+{% endblock %}

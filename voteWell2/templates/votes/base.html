@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}votewell.info{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<table class="top_bar" width="100%">
+<tr><td width="90%" align="left"><a href="/"><h1>votewell.info</h1></a></td>
+{% if user.is_authenticated %}
+<td><p> Welcome {{user.username}}</p></td>
+{% else %}
+<td width="5%"><a href="/login.html">login</a></td>
+<td width ="5%"><a href="/register.html">register</td>
+{% endif %}
+</tr></table>
+
+<div class="maincontent"/>
+{% block content %}{% endblock %}
+</div>
+</body>
+</html>

@@ -1,3 +1,5 @@
+{% extends "votes/base.html" %}
+{% block content %}
 <h2> {{bill.kind|upper}} {{bill.number}} - {{bill.mainTitle}} </h2>
 <p> Session {{bill.session}} Introduced: {{bill.introduced}} </p>
 <p>Sponsor: <a href="/legislators/{{bill.sponsor.id}}">{{bill.sponsor.name}}</a></p>
@@ -68,3 +70,4 @@
 </tr>
 </table>
 {% endif %}
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import  ListView, DetailView
 from votes.models import Subject
 
@@ -18,7 +19,9 @@ urlpatterns = patterns('',
             template_name='votes/subjectList.html')),
     url(r'^subjects/(?P<pk>\d+)/$', DetailView.as_view(
             model=Subject,
-            template_name='votes/subject.html')),  
+            template_name='votes/subject.html')),
+    url(r'^register.html/$', 'votes.views.register'),
+    url(r'^register/submit', 'votes.views.submitRegistration')
     # url(r'^$', 'voteWell2.views.home', name='home'),
     # url(r'^voteWell2/', include('voteWell2.foo.urls')),
 
@@ -28,3 +31,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+urlpatterns += staticfiles_urlpatterns()
+

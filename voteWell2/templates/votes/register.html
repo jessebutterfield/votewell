@@ -1,0 +1,25 @@
+{% extends "votes/base.html" %}
+{% block content %}
+<div style="display:inline-block;width:50%">
+<h1> Sign up for votewell.info</h1>
+<p> Registering for votewell.info provides you the ability to follow legislators,
+organizations, and fellow votewell.info users. This helps organize the large quantity of
+information available to you, by highlighting the information you're interested. Also, it
+allows you to comment on the issues you care about, to help others become more informed on
+what their congress is up to. Votewell.info is currently in the early stages of the release
+process, so please bear with us if you experience any issues. </p></td>
+</div>
+<div style="display:inline-block;margin-left:auto;margin-right:auto" width="300px">
+<div align="right">
+<form action="/register/submit" method="post">
+{% csrf_token %}
+Username: <input type="text" name="newusername" size="25"/><br/>
+Email: <input type="text" name="email" size="25"/><br />
+Password: <input type="password" name="mpassword" size="25"/><br />
+Re-enter Password: <input type="password" name="confirm" size="25"/><br />
+<input type="submit" value="submit" />
+</form> 
+</div>
+</div>
+
+{% endblock %}
