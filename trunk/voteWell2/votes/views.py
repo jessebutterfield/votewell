@@ -1,4 +1,6 @@
 from django.template import Context, loader, RequestContext
+from django.contrib.auth.models import User 
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response, get_object_or_404
 from django.db.models import Count
 from votes.models import Legislator, Bill, Comment
@@ -6,6 +8,25 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from datetime import datetime
 
+def register(request):
+    if(request.user.is_authenticated()):
+        HttpResponseRedirect(reverse('votes.views.home'))
+    return render_to_response('votes/register.html',context_instance=RequestContext(request))
+    
+def submitRegistration(request):
+    try:
+        User.objects.get(user=request.POST['newusername'])
+        print "Sorry that username is taken"
+        return
+    except:
+        if(request.POST['mpassword']==request.POST['confirm']):
+            User.objects.create_user(request.POST['newusername'],request.POST['email'],
+                                    request.POST['mpassword'])
+            
+            user = authenticate(username=request.POST['newusername'], 
+                                password=request.POST['mpassword'])
+            login(request,user)
+            return HttpResponseRedirect(reverse('votes.views.home'))
 def home(request):
     if(request.user.is_authenticated()):
         t = loader.get_template('votes/home.html')
