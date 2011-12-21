@@ -5,15 +5,32 @@
     <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-<table class="top_bar" width="100%">
-<tr><td width="90%" align="left"><a href="/"><h1>votewell.info</h1></a></td>
-{% if user.is_authenticated %}
-<td><p> Welcome {{user.username}}</p></td>
-{% else %}
-<td width="5%"><a href="/login.html">login</a></td>
-<td width ="5%"><a href="/register.html">register</td>
-{% endif %}
-</tr></table>
+<div class="top_bar" width="100%">
+	<div style="padding-right:30%"><a href="/"><h1>votewell.info</h1></a></div>
+	{% if user.is_authenticated %}
+		<div><p> Welcome {{user.username}}</p></div>
+		<div><a href="/logout/">logout</a></div>
+	{% else %}
+		<div>
+			<form action="/login/" method="post">
+			{% csrf_token %}
+			<div>
+				<label for="username">Username</label><br/>
+				<input type="text" size="25" name="username" >
+				<input type="hidden" name="next" value="{{ request.path }}" />
+			</div>
+			<div>
+				<label for="password" >Password</label><br/>
+				<input type="password" size="25" name="password">
+			</div>
+			<div>
+				<input type="submit" value="Login"  />
+			</div>
+			</form>
+		</div>
+		<div><a href="/register.html">register</a></div>
+	{% endif %}
+</div>
 
 <div class="maincontent"/>
 {% block content %}{% endblock %}
