@@ -10,8 +10,9 @@ from datetime import datetime
 
 def register(request):
     if(request.user.is_authenticated()):
-        HttpResponseRedirect(reverse('votes.views.home'))
-    return render_to_response('votes/register.html',context_instance=RequestContext(request))
+        return HttpResponseRedirect(reverse('votes.views.home'))
+    c = {'request':request}
+    return render_to_response('votes/register.html',c,context_instance=RequestContext(request))
     
 def submitRegistration(request):
     try:
@@ -29,33 +30,33 @@ def submitRegistration(request):
             return HttpResponseRedirect(reverse('votes.views.home'))
 def home(request):
     if(request.user.is_authenticated()):
-        t = loader.get_template('votes/home.html')
         comments = request.user.comment_set.all().order_by('-created')[:5]
-        c = Context({'user': request.user,
+        c = Context({'request': request,
                      'comments': comments})
+        return render_to_response('votes/home.html',c,context_instance=RequestContext(request))
+
     else:
-        t = loader.get_template('votes/welcome.html')
-        c = Context({})
-    return HttpResponse(t.render(c))
+        c = Context({'request':request})
+        return render_to_response('votes/welcome.html',c,context_instance=RequestContext(request))
 
 def state(request,state_abbr):
     legs = Legislator.objects.filter(state=state_abbr)
-    t = loader.get_template('votes/state.html')
-    c = Context({
+    c = Context({ 'request':request,
                  'legs': legs,
     })
-    return HttpResponse(t.render(c))
+    return render_to_response('votes/state.html',c,context_instance=RequestContext(request))
+
 
     
 
 def legislatorDetail(request,leg_id):
     leg = Legislator.objects.get(pk=leg_id)
     bills = leg.bill_set.all()
-    t = loader.get_template('votes/legislator.html')
-    c = Context({
+    c = Context({'request':request,
                  'leg': leg,
                  'bills': bills,})
-    return HttpResponse(t.render(c))
+    return render_to_response('votes/legislator.html',c,context_instance=RequestContext(request))
+
 
 def billDetail(request,bill_id):
     bill = Bill.objects.get(pk=bill_id)
@@ -80,7 +81,8 @@ def billDetail(request,bill_id):
     for vote in votes:
         voteMatrix[voteOptions.index(vote.vote)].append(vote)   
         
-    c = {'bill': bill,
+    c = {'request': request,
+         'bill': bill,
          'roll': roll,
          'voteMatrix': voteMatrix,
          'commentMatrix': commentMatrix,}
@@ -88,10 +90,13 @@ def billDetail(request,bill_id):
 
 
 def billComment(request,bill_id):
-    b = get_object_or_404(Bill, pk=bill_id)
-    sentiment = request.POST['comment']
-    text = request.POST['commentText']
-    c = Comment(bill=b,user=request.user,text=text,sentiment=sentiment,created=datetime.now())
-    c.save()
-    return HttpResponseRedirect(reverse('votes.views.billDetail', args=(b.id,)))
+    if(request.user.is_authenticated()):
+        b = get_object_or_404(Bill, pk=bill_id)
+        sentiment = request.POST['comment']
+        text = request.POST['commentText']
+        c = Comment(bill=b,user=request.user,text=text,sentiment=sentiment,created=datetime.now())
+        c.save()
+        return HttpResponseRedirect(reverse('votes.views.billDetail', args=(b.id,)))
+    else:
+        return HttpResponseRedirect(reverse('votes.views.register'))
 

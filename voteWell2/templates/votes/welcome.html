@@ -1,5 +1,29 @@
 {% extends "votes/base.html" %}
 {% block content %}
-<h1> Welcome to voteWell</h1>
-<h2> More coming soon</h2>
+<h1> Welcome to Votewell.info</h1>
+<div class="column2">
+<div>
+<h2> What is votewell.info</h2>
+<p> Votewell.info is social networking tool for keeping track of our legislators.
+There's so much information out there about Congress, it can be hard to wade through.
+Votewell.info points you to the votes that matter, by showing you the votes that people
+are talking about. And it lets you highlight the votes that you care about, to help others
+stay informed. So whether you're a policy wonk looking to turn the spotlight on what's
+really happening in Congress, or a first time voter just looking for some information,
+votewell.info is for you.</p>
+</div>
+<div align="center">
+<h2> Sign up now </h2>
+<div align="right" style="display:inline-block">
+<form action="/register/submit" method="post">
+{% csrf_token %}
+Username: <input type="text" name="newusername" size="25"/><br/>
+Email: <input type="text" name="email" size="25"/><br />
+Password: <input type="password" name="mpassword" size="25"/><br />
+Re-enter Password: <input type="password" name="confirm" size="25"/><br />
+<input type="submit" value="submit" />
+</form> 
+</div>
+</div>
+</div>
 {% endblock %}

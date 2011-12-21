@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.contrib.auth.views import logout, login
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import  ListView, DetailView
 from votes.models import Subject
@@ -21,7 +22,9 @@ urlpatterns = patterns('',
             model=Subject,
             template_name='votes/subject.html')),
     url(r'^register.html/$', 'votes.views.register'),
-    url(r'^register/submit', 'votes.views.submitRegistration')
+    url(r'^register/submit', 'votes.views.submitRegistration'),
+    url(r'^logout/$',logout,{'next_page': '/'}),
+    url(r'^login/$', login),
     # url(r'^$', 'voteWell2.views.home', name='home'),
     # url(r'^voteWell2/', include('voteWell2.foo.urls')),
 
