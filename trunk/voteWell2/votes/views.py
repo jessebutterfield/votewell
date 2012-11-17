@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response, get_object_or_404
 from django.db.models import Count
-from votes.models import Legislator, Bill, Comment
+from votes.models import Legislator, Bill, Comment, Subject
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from datetime import datetime
@@ -94,9 +94,29 @@ def billComment(request,bill_id):
         b = get_object_or_404(Bill, pk=bill_id)
         sentiment = request.POST['comment']
         text = request.POST['commentText']
-        c = Comment(bill=b,user=request.user,text=text,sentiment=sentiment,created=datetime.now())
-        c.save()
+        com = Comment(bill=b,user=request.user,text=text,sentiment=sentiment,created=datetime.now())
+        com.save()
         return HttpResponseRedirect(reverse('votes.views.billDetail', args=(b.id,)))
     else:
         return HttpResponseRedirect(reverse('votes.views.register'))
+    
+def search(request):
+        
+    c = {'request': request,}
+    return render_to_response('votes/search.html',c,context_instance=RequestContext(request))
 
+def searchSubmit(request,search_type):
+    #TODO figure out switch statements in Python
+    results = {}
+    if(search_type == 'bills'):
+        query = request.POST['query'].split()
+        results['bills'] = Bill.objects.all()
+        results['subjects'] = Subject.objects.all()
+        for q in query:
+            results['bills'] = results['bills'].filter(title__title__icontains=q).distinct()
+            results['subjects'] = results['subjects'].filter(name__icontains=q)
+        c = {'request': request,
+             'results': results,}
+        return render_to_response('votes/results.html',c,context_instance=RequestContext(request))
+        
+        

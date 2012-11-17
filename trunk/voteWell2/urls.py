@@ -25,6 +25,8 @@ urlpatterns = patterns('',
     url(r'^register/submit', 'votes.views.submitRegistration'),
     url(r'^logout/$',logout,{'next_page': '/'}),
     url(r'^login/$', login),
+    url(r'^search/$','votes.views.search'),
+    url(r'^search/(?P<search_type>\w+)','votes.views.searchSubmit'),
     # url(r'^$', 'voteWell2.views.home', name='home'),
     # url(r'^voteWell2/', include('voteWell2.foo.urls')),
 

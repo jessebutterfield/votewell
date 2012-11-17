@@ -1,0 +1,26 @@
+{% extends "votes/base.html" %}
+{% block content %}
+
+<h2>Bill Results</h2>
+{% if results.bills %}
+<ul>
+{% for b in results.bills %}
+<li><a href="/bills/{{b.id}}">{{b.kind|upper}} {{b.number}}</a> {{b.mainTitle}}</li>
+{%endfor%}
+{%else%}
+<p> No bills with titles containing your query were found </p>
+{%endif%}
+<h2> Subject Results </h2>
+{% if results.subjects %}
+<ul>
+{% for s in results.subjects %}
+<li><a href="/subjects/{{s.id}}">{{s.name}}</a></li>
+{%endfor%}
+{%else%}
+<p> No subjects containing your query were found </p>
+{%endif%}
+
+
+
+
+{% endblock %}
