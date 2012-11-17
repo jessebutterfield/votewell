@@ -6,7 +6,7 @@
 {% if comments %}
 <ul>
 {% for c in comments %}
-<li>{{c.text}}</li>
+<li><a href="/users/{{c.user.username}}">{{c.user.username}}</a> ({{c.sentiment}}) {{c.text}}</li>
 {%endfor%}
 {%endif%}
 

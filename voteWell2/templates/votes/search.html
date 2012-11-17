@@ -1,0 +1,24 @@
+{% extends "votes/base.html" %}
+{% block content %}
+<h2> Search Bills by Subject, Title, or Number </h2>
+<form action="/search/bills" method="post">
+{% csrf_token %}
+<input type="text" name="query" size="50"/>
+<input type="submit" value="submit" />
+</form>
+
+<h2> Search Legislators by Name or State</h2>
+<form action="/search/legislators" method="post">
+{% csrf_token %}
+<input type="text" name="query" size="50"/>
+<input type="submit" value="submit" />
+</form>
+
+<h2> Search Legislators by Name or State</h2>
+<form action="/search/users" method="post">
+{% csrf_token %}
+<input type="text" name="query" size="50"/>
+<input type="submit" value="submit" />
+</form>
+
+{% endblock %}
